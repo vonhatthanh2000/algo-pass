@@ -1,5 +1,3 @@
-package main
-
 func twoSum(nums []int, target int) []int {
 	arrMap := make(map[int]int)
 
