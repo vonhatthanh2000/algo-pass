@@ -10,3 +10,25 @@ function maxArea(height: number[]): number {
 
     return maxValue;
 };
+
+// consult solution
+function maxArea2(height: number[]): number {
+    let maxAmount = 0;
+    let left = 0;
+    let right = height.length - 1;
+
+    while (left < right) {
+        const leftVal = height[left];
+        const rightVal = height[right];
+        const width = right - left;
+        const currentAmount = Math.min(leftVal, rightVal) * width;
+        maxAmount = Math.max(maxAmount, currentAmount);
+        if (leftVal < rightVal) {
+            left++
+        } else {
+            right--
+        }
+    }
+
+    return maxAmount
+};
