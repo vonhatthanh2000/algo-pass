@@ -1,9 +1,5 @@
 package main
 
-import (
-	"fmt"
-)
-
 type Stack struct {
 	items []interface{}
 }
@@ -37,6 +33,10 @@ func (s *Stack) Size() int {
 	return len(s.items)
 }
 
+func NewStack() *Stack {
+	return &Stack{}
+}
+
 func isValid(s string) bool {
 	stack := Stack{}
 
@@ -60,8 +60,54 @@ func isValid(s string) bool {
 	return stack.IsEmpty()
 }
 
-func main() {
-	a := "([{}])"
-	fmt.Println(isValid(a))
+////
 
+type MinStack struct {
+	stack    *Stack
+	minStack *Stack
+}
+
+func Constructor() MinStack {
+	return MinStack{
+		stack:    NewStack(),
+		minStack: NewStack(),
+	}
+}
+
+func (this *MinStack) Push(val int) {
+	this.stack.items = append(this.stack.items, val)
+
+	min := val
+	if !this.minStack.IsEmpty() {
+		top := this.GetMin()
+		if top < min {
+			min = top
+		}
+	}
+	this.minStack.Push(min)
+}
+
+func (this *MinStack) Pop() {
+	this.stack.Pop()
+	this.minStack.Pop()
+}
+
+func (this *MinStack) Top() int {
+	top, _ := this.stack.Peek()
+	return top.(int)
+}
+
+func (this *MinStack) GetMin() int {
+	top, _ := this.minStack.Peek()
+	return top.(int)
+}
+
+func main() {
+	minStack := Constructor()
+	minStack.Push(-2)
+
+	minStack.Push(0)
+	minStack.Push(-3)
+
+	minStack.Pop()
 }
